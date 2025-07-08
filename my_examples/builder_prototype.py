@@ -32,6 +32,8 @@ def start_condition(func):
     return wrapper
 
 
+# Object that will be used as a prototype
+# Object that needs to be built
 class Conditioner:
     def __init__(self, temp: int, mode: str, fan: str, power: bool = False):
         self.temp = temp
@@ -43,7 +45,7 @@ class Conditioner:
         return self.power
 
     @start_condition
-    def start_conditioner(self):
+    def display(self):
         return f"<<< Display >>>\n \
         Temp: {self.temp}\n \
         Mode: {self.mode}\n \
@@ -103,13 +105,13 @@ if __name__ == "__main__":
         .build()
     )
 
-    print(kitchen.start_conditioner())
+    print(kitchen.display())
 
     bedroom = kitchen.clone(False)
     bedroom.power = True
     bedroom.temp = 23
     bedroom.mode = "cool"
-    print(bedroom.start_conditioner())
+    print(bedroom.display())
 
 
 # Цель: Пошаговая сборка сложного объекта.

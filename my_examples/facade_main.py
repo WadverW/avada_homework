@@ -9,6 +9,8 @@ class Author:
 
         if self.email_valid(email):
             self.email = email
+        else:
+            return None
 
     @staticmethod
     def email_valid(email):
@@ -20,7 +22,7 @@ class Author:
     @classmethod  # To refere to class via cls -> call email_valid in the class
     def reg_author(cls):
         while True:
-            data = input("Enter your name surname email: ")
+            data = input("Enter your name, surname, email: ")
             vars = re.split(r"\s*[-,\s/;]+\s*", data)
             if len(vars) == 3:
                 name, surname, email = vars
@@ -33,7 +35,7 @@ class Author:
                     continue
             else:
                 print(
-                    "Invalid input. Please enter name, surname, and email separated by spaces or comma"
+                    "Please enter name, surname, and email separated by spaces or comma"
                 )
                 continue
 
@@ -158,5 +160,3 @@ class PreviewDelete(Note):
 # Цель: Предоставляет упрощённый интерфейс к сложной подсистеме.
 
 # Принцип: Один класс скрывает множество внутренних.
-
-# Плюс: Упрощение и изоляция кода клиента.

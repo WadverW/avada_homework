@@ -15,30 +15,30 @@ class CoffeeType(Enum):
 class Coffee(ABC):
     @abstractmethod
     def get_coffee(self):
-        time.sleep(1)
+        pass
 
 
-# Espresso coffee
 class Espresso(Coffee):
     def get_coffee(self):
+        time.sleep(1)
         print("Get espresso")
 
 
-# Americano coffee
 class Americano(Coffee):
     def get_coffee(self):
+        time.sleep(1)
         print("Get americano")
 
 
-# Cappuccino coffee
 class Cappuccino(Coffee):
     def get_coffee(self):
+        time.sleep(1)
         print("Get cappuccino")
 
 
-# Latte coffee
 class Latte(Coffee):
     def get_coffee(self):
+        time.sleep(1)
         print("Get latte")
 
 
@@ -65,7 +65,7 @@ class IncantoBrand(CoffeeMachine):
             raise ValueError("Unknown coffee type")
 
 
-# To choose coffee - each order-item in a separate thread
+# Get each order-item in a separate thread
 def order_coffee(coffee: Coffee):
     print(f"Start brewing: {coffee.__class__.__name__}")
     time.sleep(1)
@@ -78,15 +78,14 @@ def order_coffee(coffee: Coffee):
 def input_order() -> str:
     while True:
         coffee_order = (
-            input(
-                "What coffee do you prefer? (espresso/americano/latte/cappuccino/exit): "
-            )
+            input("Enter coffee type (espresso/americano/latte/cappuccino/exit): ")
             .strip()
             .lower()
         )
         if coffee_order not in ["espresso", "americano", "latte", "cappuccino", "exit"]:
-            print("Please enter 'espresso/americano' or 'exit'")
-        return coffee_order
+            print("Please enter 'espresso/americano/latte/cappuccino' or 'exit'")
+        else:
+            return coffee_order
 
 
 # Main execution
@@ -102,7 +101,7 @@ if __name__ == "__main__":
             coffee_order = input_order()
 
             if coffee_order == "espresso":
-                coffee = factory.brew_coffee(CoffeeType.espresso)  # -> Espresso()
+                coffee = factory.brew_coffee(CoffeeType.espresso)
             elif coffee_order == "americano":
                 coffee = factory.brew_coffee(CoffeeType.americano)
             elif coffee_order == "latte":
@@ -128,6 +127,5 @@ if __name__ == "__main__":
         t.join()
 
 
-# Принцип: Интерфейс для создания объектов нескольких типов без указания их классов.
-
-# Плюс: Совместимость продуктов внутри семейства.
+# отделить код, который создает объекты, от кода, который их использует
+# потоки работают конкурентно

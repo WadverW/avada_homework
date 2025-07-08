@@ -7,6 +7,10 @@ class Unit:
         self.name = name
         self.price = price
         self.volume = volume
+        self.parent = None
+
+    def set_parent(self, parent):
+        self.parent = parent
 
     @property
     def price(self) -> float:
@@ -34,7 +38,7 @@ class Composite:
     System of units (out and inner units)
     """
 
-    BRANDS = ["fujico", "EWT", "Aircool", "Chiq"]
+    BRANDS = ["Fujico", "EWT", "Aircool", "Chiq"]
 
     def __init__(self, name: str):
         self.name = name
@@ -53,6 +57,7 @@ class Composite:
 
     def add_unit(self, unit: Unit):
         self.units.append(unit)
+        unit.set_parent(self)
         return self
 
     def price(self) -> float:
@@ -68,19 +73,22 @@ if __name__ == "__main__":
     inner_unit2 = Unit("fma-09", 50.0, 500)
     inner_unit3 = Unit("fma-07", 45.0, 500)
 
-    # inner_unit1.price = 55.0
-    # inner_unit1.volume = 300
+    out_unit2 = Unit("FMA", 800.0, 1000)
+    inner_unit11 = Unit("fma-12", 50.0, 500)
+    inner_unit22 = Unit("fma-12", 50.0, 500)
 
-    multysystem = Composite("Suzuki")
+    multysystem = Composite("Fujico")
 
     multysystem.add_unit(out_unit).add_unit(inner_unit1).add_unit(inner_unit2).add_unit(
         inner_unit3
     )
 
+    multysystem.add_unit(out_unit2).add_unit(inner_unit11).add_unit(inner_unit22)
+
     print(multysystem.price())
+    print([x.name for x in multysystem.units])
+    # print(out_unit.parent.name)
 
 # Цель: Иерархия «часть-целое» — работа с объектами и группами одинаково.
-
-# Принцип: Узлы и листья реализуют один интерфейс.
 
 # Плюс: Упрощает работу с деревьями.
