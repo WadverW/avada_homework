@@ -1,5 +1,5 @@
-class WhiskeyType:
-    """Whiskey Type"""
+class WhiskeyType:  # ---> General State
+    """Whiskey Type - FlyWeight"""
 
     def __init__(self, brand: str, strength: float, barrel: str, recipe: str):
         self.brand = brand
@@ -30,19 +30,17 @@ class WhiskeyFactory:
         return self._types[type_]
 
 
-# Pоль: WhiskeyBottle содержит ссылку на WhiskeyType, но сам тип виски — не уникален для каждой бутылки.
-# WhiskeyBottle содержит внешние данные, уникальные для каждой бутылки
 class WhiskeyBottle:
     """Particular bottle -> object (accepts type and external data)"""
 
     def __init__(
         self,
-        batch_number: str,
+        number: str,
         bottle_number: int,
         bottled_date: str,
         whiskey_type: WhiskeyType,
     ):
-        self.batch_number = batch_number
+        self.batch_number = number
         self.bottle_number = bottle_number
         self.bottled_date = bottled_date
         self.whiskey_type = whiskey_type
@@ -53,9 +51,8 @@ class WhiskeyBottle:
         )
 
 
-# Роль: Distillery использует WhiskeyFactory, чтобы получить объект WhiskeyType
-# Distillery — клиентский класс, который всё организует,
-# используя фабрику и создавая конкретные экземпляры бутылок.
+# Роль: Distillery uses WhiskeyFactory -> WhiskeyType
+# Distillery — client class
 class Distillery:
     """Production"""
 
@@ -64,11 +61,15 @@ class Distillery:
         self.factory = factory
 
     def produce_bottle(
-        self, brand, strength, barrel, recipe, batch_number, bottle_number, bottled_date
+        self, brand, strength, barrel, recipe, number, bottle_number, bottled_date
     ):
-        whiskey_type = self.factory.get_whiskey_type(brand, strength, barrel, recipe)
-        bottle = WhiskeyBottle(batch_number, bottle_number, bottled_date, whiskey_type)
-        self.bottles.append(bottle)
+        whiskey_type = self.factory.get_whiskey_type(
+            brand, strength, barrel, recipe
+        )  # get type
+        bottle = WhiskeyBottle(
+            number, bottle_number, bottled_date, whiskey_type
+        )  # create bottle
+        self.bottles.append(bottle)  # collect bottles
 
     def show_all_bottles(self):
         for bottle in self.bottles:
@@ -87,7 +88,7 @@ for i in range(1, 4):
         strength=40.0,
         barrel="Cherry",
         recipe="Kraft",
-        batch_number="AAA1000" + str(i),
+        number="AAA1000" + str(i),
         bottle_number=i,
         bottled_date="2025-07-07",
     )
@@ -99,13 +100,13 @@ for i in range(1, 3):
         strength=43.0,
         barrel="Stout",
         recipe="Kraft",
-        batch_number="DDD5555" + str(i),
+        number="DDD5555" + str(i),
         bottle_number=1,
         bottled_date="2025-07-07",
     )
 
 
-print("\n=== All bottles ===")
+print("\nAll bottles:")
 distillery.show_all_bottles()
 
 

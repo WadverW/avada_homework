@@ -66,7 +66,7 @@ class IncantoBrand(CoffeeMachine):
 
 
 # Get each order-item in a separate thread
-def order_coffee(coffee: Coffee):
+def get_order_item(coffee: Coffee):
     print(f"Start brewing: {coffee.__class__.__name__}")
     time.sleep(1)
     thread = Thread(target=coffee.get_coffee)
@@ -88,7 +88,6 @@ def input_order() -> str:
             return coffee_order
 
 
-# Main execution
 if __name__ == "__main__":
     factory = IncantoBrand()
     entire_order = []  # To store order-items
@@ -96,24 +95,16 @@ if __name__ == "__main__":
     while True:
         coffee = None
         coffee_order = None
-
+        items = []
         try:
             coffee_order = input_order()
 
-            if coffee_order == "espresso":
-                coffee = factory.brew_coffee(CoffeeType.espresso)
-            elif coffee_order == "americano":
-                coffee = factory.brew_coffee(CoffeeType.americano)
-            elif coffee_order == "latte":
-                coffee = factory.brew_coffee(CoffeeType.latte)
-            elif coffee_order == "cappuccino":
-                coffee = factory.brew_coffee(CoffeeType.cappuccino)
-            elif coffee_order == "exit":
+            if coffee_order == "exit":
                 break
             else:
-                continue
+                coffee = factory.brew_coffee(CoffeeType[coffee_order])
+                entire_order.append(coffee)
 
-            entire_order.append(coffee)
         except ValueError as e:
             print("Error:", e)
             break
@@ -122,7 +113,7 @@ if __name__ == "__main__":
                 print(coffee.__class__.__name__, "preparing...")
 
     # Get all ordered coffee
-    chosen_coffee = [order_coffee(coffee) for coffee in entire_order]
+    chosen_coffee = [get_order_item(coffee) for coffee in entire_order]
     for t in chosen_coffee:
         t.join()
 
