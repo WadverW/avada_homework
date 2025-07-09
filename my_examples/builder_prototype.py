@@ -19,7 +19,6 @@ class ConditionerBuilder:
 from datetime import datetime
 import copy
 
-
 def start_condition(func):
     def wrapper(self, *args, **kwargs):
         if self.is_on():
@@ -84,7 +83,7 @@ class ConditionerBuilder:
         self._power = True
         return self
 
-    def build(self):
+    def build(self):  # <<< ========== HERE the object of Conditioner is created
         if not self._temp or not self._mode:
             raise ValueError("Please setup parameters")
         return Conditioner(
@@ -114,8 +113,6 @@ if __name__ == "__main__":
     print(bedroom.display())
 
 
-# Цель: Пошаговая сборка сложного объекта.
+# Цель: Пошаговая сборка сложного объекта
 
-# Принцип: Разделение конструирования и представления.
 
-# Плюс: Гибкость в создании разных конфигураций.

@@ -159,3 +159,7 @@ if __name__ == "__main__":
     print(f"Conditioner {cond.get_name()} - OFF")
     remote.off()
     remote.status()
+
+# Interaction Conditioner -> Remote via link - self._conditioner in class Remote
+# Abstract class Conditioner is realized in class Mitsubishi
+# Mitsubishi is a concrete class
