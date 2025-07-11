@@ -7,10 +7,10 @@ class WhiskeyType:  # ---> General State
         self.barrel = barrel
         self.recipe = recipe
 
-    def display(self, batch_number: str, bottle_number: int, bottled_date: str):
+    def display(self, number: str, bottle_number: int, bottled_date: str):
         print(
             f"Brand: {self.brand}, Strength: {self.strength}%, Barrel: {self.barrel}, Recipe: {self.recipe} --> "
-            f"Batch: {batch_number}, Bottle: {bottle_number}, Bottled date: {bottled_date}"
+            f"Number {number}, Bottle: {bottle_number}, Bottled date: {bottled_date}"
         )
 
 
@@ -51,7 +51,7 @@ class WhiskeyBottle:
         )
 
 
-# Роль: Distillery uses WhiskeyFactory -> WhiskeyType
+# Distillery uses WhiskeyFactory -> WhiskeyType
 # Distillery — client class
 class Distillery:
     """Production"""
@@ -76,15 +76,13 @@ class Distillery:
             bottle.display()
 
 
-# === Use ===
-
 factory = WhiskeyFactory()
 distillery = Distillery(factory)
 
 # Produce 4 (3 and 2) bottles
 for i in range(1, 4):
     distillery.produce_bottle(
-        brand="Glen Fidich",
+        brand="Glenfiddich",
         strength=40.0,
         barrel="Cherry",
         recipe="Kraft",

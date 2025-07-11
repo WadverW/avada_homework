@@ -152,7 +152,7 @@ class ModeDecorator(DecoratorConditioner):
 
     @property
     def temp(self) -> int:
-        print(f"[{self.name}] Mode: {self.mode}")
+        print(f"{self.name} Mode: {self.mode}")
         return super().temp
 
     @temp.setter
@@ -195,3 +195,4 @@ if __name__ == "__main__":
     fan_decorated.start()  # start() passes through all decorators
 
     print(f"Get temperature: {fan_decorated.temp}")
+    print(f"{fan_decorated.name}")

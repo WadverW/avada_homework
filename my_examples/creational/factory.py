@@ -42,7 +42,7 @@ class Latte(Coffee):
         print("Get latte")
 
 
-# Coffemachine interface
+# Coffeemachine interface
 class CoffeeMachine(ABC):
     @abstractmethod
     def brew_coffee(self, coffee_type: CoffeeType) -> Coffee:
@@ -66,10 +66,10 @@ class IncantoBrand(CoffeeMachine):
 
 
 # Get each order-item in a separate thread
-def get_order_item(coffee: Coffee):
-    print(f"Start brewing: {coffee.__class__.__name__}")
+def get_order_item(coffee_: Coffee):
+    print(f"Start brewing: {coffee_.__class__.__name__}")
     time.sleep(1)
-    thread = Thread(target=coffee.get_coffee)
+    thread = Thread(target=coffee_.get_coffee)
     thread.start()
     return thread
 
@@ -77,15 +77,15 @@ def get_order_item(coffee: Coffee):
 # Input order
 def input_order() -> str:
     while True:
-        coffee_order = (
+        coffee_order_ = (
             input("Enter coffee type (espresso/americano/latte/cappuccino/exit): ")
             .strip()
             .lower()
         )
-        if coffee_order not in ["espresso", "americano", "latte", "cappuccino", "exit"]:
+        if coffee_order_ not in ["espresso", "americano", "latte", "cappuccino", "exit"]:
             print("Please enter 'espresso/americano/latte/cappuccino' or 'exit'")
         else:
-            return coffee_order
+            return coffee_order_
 
 
 if __name__ == "__main__":
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     while True:
         coffee = None
         coffee_order = None
-        items = []
+
         try:
             coffee_order = input_order()
 

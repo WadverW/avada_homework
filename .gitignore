@@ -1,3 +1,6 @@
 venv/
 .pycache/
 __pycache__
+proxy
+.sqlite3
+.db
